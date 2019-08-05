@@ -14,7 +14,7 @@ function Form(){
         <form id="c_form-h" className="w-75">
               <div className="form-group row">
                 <div className="col-10">
-                  <label for="exampleFormControlSelect1">Product orientation</label>
+                  <label htmlFor="exampleFormControlSelect1">Product orientation</label>
                   <select className="form-control" id="rotationPicker">
                     <option value="horizontal">Horizontal</option>
                     <option value="vertical">Vertical</option>
@@ -23,7 +23,7 @@ function Form(){
               </div>
               <div className="form-group row">
                 <div className="col-10">
-                  <label for="exampleFormControlSelect1">Select your favourite font</label>
+                  <label htmlFor="exampleFormControlSelect1">Select your favourite font</label>
                   <select className="form-control" id="font-picker">
                     <option value="Roboto">Roboto</option>
                     <option value="Arial">Arial</option>
@@ -33,13 +33,13 @@ function Form(){
               </div>
               <div className="form-group row">
                 <div className="col-10">
-                  <label for="exampleFormControlSelect1">Select your picture</label>
+                  <label htmlFor="exampleFormControlSelect1">Select your picture</label>
                   <input type="hidden" role="uploadcare-uploader" data-crop="800x600 upscale"/>
                 </div>
               </div>
               <div className="form-group row">
                 <div className="col-10">
-                  <label for="exampleFormControlSelect1">Your text</label>
+                  <label htmlFor="exampleFormControlSelect1">Your text</label>
                   <input type="text" className="form-control" id="wood-text-input"/>
                 </div>
               </div>
@@ -53,7 +53,7 @@ function Form(){
               </div>
               <div className="form-group row" id="wrapp-comment-form-group">
                 <div className="col-10">
-                  <label for="exampleFormControlSelect1">Wrap comment</label>
+                  <label htmlFor="exampleFormControlSelect1">Wrap comment</label>
                   <input type="text" className="form-control" id="wrap-comment-input"/></div>
               </div>
               <br/>

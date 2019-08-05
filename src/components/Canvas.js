@@ -1,71 +1,131 @@
-import React, {useState, useEffect} from 'react';
-import {Canvas as FabricCanvas ,Circle, Image, Path, Text} from 'react-fabricjs';
+import React, {useState, useEffect, useRef } from 'react';
+import { fabric } from 'fabric';
 
 
-function Canvas(){
+function Canvas(column){
 
-    const [canvas, setCanvas ] = useState(null);
-    const [canvasWidth, setCanvasWidth] = useState(400);
-    const [canvasHeigth, setCanvasHeigth] = useState(400);
+    let [canvas, setCanvas ] = useState(null);
+    let [baseWidth, setBaseWidth] = useState(0);
+    let [baseHeigth, setBaseHeigth] = useState(0);
 
-    // useEffect(() => { 
-    //     const c = new fabric.Canvas('c', { 
-    //         width: canvasWidth,
-    //         height: canvasHeigth
-    //     });
-    //     setCanvas(c);
-    // }, []);
+    canvas = useRef(null);
 
+    useEffect(() => { 
+        setCanvas(new fabric.Canvas('wood-customizer-canvas'));      
+        window.addEventListener('resize', handleResize);
+    }, []);
 
-    return (
-    <FabricCanvas
-        ref="canvas"
-        width="1000"
-        height="1000"
-    >
-        <Circle
-            ref="circle"
-            radius={20}
-            left={100}
-            top={50}
-            stroke="green"
-        />
+    const handleResize = () => {
+        console.log("resize");
+    }
 
-        <Image
-            ref="image"
-            imgElement={document.getElementById('my-image')}
-            width={100}
-            height={100}
-        />
-
-        <Image
-            src="http://i.imgur.com/jZsNUCi.jpg"
-            width={300}
-            height={300}
-            left={0}
-            top={500}
-        />
+    useEffect(() => {
+        if(column && canvas){
+            const columnParent = column.column.current;
+            const {clientHeight : columnHeight, clientWidth: columnWidth} = columnParent;
+            console.log(canvas.current.width);
+            canvas.current.width = columnWidth;
+            console.log(canvas.current.width);
+            canvas.current.height = columnHeight;
+        }
+    }, [column, canvas]);
 
 
-        <Path
-            path="M 0 0 L 300 100 L 200 300 z"
-            fill="red"
-            stroke="green"
-            strokeWidth={10}
-            opacity={0.5}
-        />
+    const [dimensions, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
 
-        <Text
-            text="Click me"
-            left={0}
-            top={200}
-            shadow="rgba(0,0,0,0.3) 5px 5px 5px"
-            stroke="#ff1318"
-            strokeWidth={1}
-            fontStyle="italic"
-            fontFamily="Hoefler Text"
-        />
-    </FabricCanvas>);
+
+    //=============================================
+    //window resize listener:
+    // useEffect(() => {
+    //     function handleResize() {
+    //         // setDimensions({
+    //         //     height: window.innerHeight,
+    //         //     width: window.innerWidth
+    //         // })
+    //         console.log(window.innerHeight);
+    //         console.log(window.innerWidth);
+    //     }
+    //     window.addEventListener('resize', handleResize);
+    // });
+    //=============================================
+
+    const addImage = (url) => {
+        fabric.Image.fromURL(url, (img) => {
+            img.set({
+                // width: canvasWidth,
+                // height: canvasHeigth,
+                originX:  'center',
+                originY: 'center',
+                selectable: false
+            });
+            img.opacity = 0.7;
+            canvas.add(img);
+            console.log(img.height);
+            console.log(img.width);
+            canvas.calcOffset();
+        }, { crossOrigin: 'Anonymous' });
+    };
+
+    const addBaseImage = (url) => {
+        fabric.Image.fromURL(url, (img) => {
+            img.set({
+                // width: canvasWidth,
+                // height: canvasHeigth,
+                originX:  'left',
+                originY: 'top',
+                selectable: false
+            });
+            canvas.preserveObjectStacking  = true;
+            canvas.add(img);
+            canvas.setWidth(img.width);
+            canvas.setHeight(img.height);
+            canvas.calcOffset();
+            canvas.sendToBack(img);
+            //addText('Enter your text');
+            //initialWoodImage = img;
+          }, { crossOrigin: 'Anonymous' });
+    };
+
+
+    // useEffect(() => {
+    //     const element = column.column.current;
+    //     console.log(element);
+    //     console.log(element.clientHeight);
+    //     console.log(element.clientWidth);
+    //     element.addEventListener('resize', (event) => console.log(event.detail));
+    //     // function checkResize(mutations) {
+    //     //     const el = mutations[0].target;
+    //     //     const w = el.clientWidth;
+    //     //     const h = el.clientHeight;
+
+    //     //     const isChange = mutations
+    //     //         .map((m) => `${m.oldValue}`)
+    //     //         .some((prev) => prev.indexOf(`width: ${w}px`) === -1 || prev.indexOf(`height: ${h}px`) === -1);
+
+    //     //     if (!isChange) { return; }
+    //     //     const event = new CustomEvent('resize', { detail: { width: w, height: h } });
+    //     //     el.dispatchEvent(event);
+    //     // }
+    //     // const observer = new MutationObserver(checkResize);
+    //     // observer.observe(element, { attributes: true, attributeOldValue: true, attributeFilter: ['style'] });
+    // }, [])
+
+
+
+    //style={{width : '100%', heigth : '100%', border : '1px solid black'}
+    //ref={canvasRef}
+
+
+    const fullWidthStyle = {
+        border : '1px solid black',
+        width: '100%',
+        height: 'auto'
+    }
+
+    return  <canvas  id="wood-customizer-canvas" style={fullWidthStyle} ref={canvas}/>
 }
 
-export default Canvas;
+export default React.memo(Canvas);

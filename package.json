@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-fabricjs": "^0.1.6",
-    "react-scripts": "3.0.1",
-    "uploadcare-widget": "^3.7.7"
+    "bootstrap": "latest",
+    "fabric": "^3.3.2",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
+    "uploadcare-widget": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
