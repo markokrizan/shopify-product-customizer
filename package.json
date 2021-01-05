@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@uploadcare/react-widget": "^0.2.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "latest",
     "fabric": "^3.3.2",
     "react": "latest",
